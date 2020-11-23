@@ -4,6 +4,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css">
+
         <title>Laravel</title>
 
         <!-- Fonts -->
@@ -20,7 +22,18 @@
             }
         </style>
     </head>
-    <body class="antialiased">
+    <body>
+        <div>
+            <div class="container">
+                <div id="menu">
+                    <ul>
+                        <li class="{{ Request::path() === '/' ? 'current_page_item' : '' }}"><a href="/" accesskey="1" title="">Homepage</a></li>
+                        <li class="{{ Request::path() === 'about' ? 'current_page_item' : '' }}"><a href="/about" accesskey="2" title="">About Us</a></li>
+                        <li class="{{ Request::path() === 'articles' ? 'current_page_item' : '' }}"><a href="/articles" accesskey="3" title="">Articles</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
        @yield ('content')
     </body>
 </html>
