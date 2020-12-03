@@ -3,7 +3,7 @@
 @section ('content')
     <div>
         <ul class="list">
-            @foreach ($articles as $article)
+            @forelse ($articles as $article)
                 <li class="first">
                     <h3>
                         <a href="{{ $article->path() }}">{{ $article->title }}</a>
@@ -11,6 +11,8 @@
 
                     <p>{{ $article->excerpt }}</p>
                 </li>
+            @empty
+                <p>No relevant articles found.</p>
             @endforeach
         </ul>
     </div>

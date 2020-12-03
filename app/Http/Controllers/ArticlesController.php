@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Tag;
 use App\Models\Article;
 use Facade\Ignition\DumpRecorder\DumpHandler;
 
@@ -11,6 +12,12 @@ class ArticlesController extends Controller
     public function index()
     {
         // Render a list of a resource
+        if (request('tag')) {
+            $articles = Tag::where('name', request('tag'))->firstOrFail()->articles;
+        } else {
+            $articles = Article::latest()->get();
+        }
+
         $articles = Article::latest()->get();
 
         return view('articles.index', ['articles' => $articles]);
