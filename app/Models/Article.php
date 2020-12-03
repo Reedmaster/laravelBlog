@@ -10,8 +10,13 @@ class Article extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public function getRouteKeyName()
+    public function path()
     {
-        return 'slug'; // Article::where('slug', $article)->first()
+        return route('articles.show', $this);
+    }
+
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'user_id'); // Each user belongs to an article
     }
 }

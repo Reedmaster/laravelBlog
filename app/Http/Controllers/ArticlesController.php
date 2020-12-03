@@ -16,10 +16,9 @@ class ArticlesController extends Controller
         return view('articles.index', ['articles' => $articles]);
     }
 
-    public function show($id)
+    public function show(Article $article)
     {   
         // Show a single resource
-        $article = Article::find($id);
 
         return view('articles.show', ['article' => $article]);
     }
@@ -34,51 +33,39 @@ class ArticlesController extends Controller
     {
         // Persist the new resource
 
-        $article = new Article();
+        Article::create($this->validateArticle());
 
-        $article->title = request('title');
-        $article->excerpt = request('excerpt');
-        $article->body = request('body');
-
-        $article->save();
-
-        return redirect('/articles');
+        return redirect(route('articles.index'));
     }
 
-    public function edit($id)
+    public function edit(Article $article)
     {
         // Show a view to edit an existing resource
         // Find the article associated with the id
-        $article = Article::find($id);
 
         return view('articles.edit', compact('article'));
     }
 
-    public function update($id)
+    public function update(Article $article)
     {
         // Persist the edited resource
-        $article = Article::find($id);
 
-        $article->title = request('title');
-        $article->excerpt = request('excerpt');
-        $article->body = request('body');
+        $article->update($this->validateArticle());
 
-        $article->save();
-
-        return redirect('/articles/' . $article->id);
+        return redirect($article->path());
     }
 
-    // protected function validateArticle()
-    // {
-    //     return request()->validate([
-    //         'title' => 'required',
-    //         'excerpt' => 'required',
-    //         'body' => 'required'
-    //     ]);
-    // }
+    protected function validateArticle()
+    {
+        return request()->validate([
+            'title' => 'required',
+            'excerpt' => 'required',
+            'body' => 'required'
+        ]);
+    }
 
-    // public function destroy()
-    // {
-    //     // Delete the resource
-    // }
+    public function destroy()
+    {
+        // Delete the resource
+    }
 }
