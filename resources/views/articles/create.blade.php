@@ -47,10 +47,15 @@
                 <label class="label" for="body">Tags</label>
 
                 <div class="control">
-                    <input class="textarea" name="body" id="body" value="{{ old('body') }}"></textarea>
+                    <select name="tags[]">
 
-                    @error('body')
-                        <p class="help is-danger">{{ $errors->first('body') }}</p>
+                        @foreach ($tags as $tag)
+                            <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                        @endforeach
+                    </select>
+
+                    @error('tags')
+                        <p class="help is-danger">{{ $message }}</p>
                     @enderror
                 </div>
             </div>
